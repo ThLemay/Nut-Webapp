@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Box } from 'lucide-react';
+import logoWhite from '@/assets/logo-white.png';
 
 const SplashScreen = () => {
   const navigate = useNavigate();
@@ -22,8 +22,8 @@ const SplashScreen = () => {
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         className="flex flex-col items-center"
       >
-        <div className="w-24 h-24 rounded-3xl bg-primary flex items-center justify-center mb-6 shadow-elevated">
-          <Box className="w-12 h-12 text-primary-foreground" />
+        <div className="w-24 h-24 rounded-3xl bg-primary flex items-center justify-center mb-6 shadow-elevated p-4">
+          <img src={logoWhite} alt="NutBox Logo" className="w-full h-full object-contain" />
         </div>
         <motion.h1 
           initial={{ opacity: 0, y: 10 }}
