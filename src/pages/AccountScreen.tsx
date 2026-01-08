@@ -16,7 +16,7 @@ const AccountScreen = () => {
   const profileFields = [
     { icon: User, label: 'Name', value: user?.name || 'Demo User' },
     { icon: Mail, label: 'Email', value: user?.email || 'demo@example.com' },
-    { icon: Shield, label: 'Account Type', value: user?.role === 'client' ? 'Client' : 'Company' },
+    { icon: Shield, label: 'Account Type', value: user?.role === 'client' ? 'Client' : 'Entreprise' },
   ];
 
   return (
