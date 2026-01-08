@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Box, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { useAuth, UserRole } from '@/contexts/AuthContext';
+import logoWhite from '@/assets/logo-white.png';
 
 const LoginScreen = () => {
   const navigate = useNavigate();
@@ -34,8 +35,8 @@ const LoginScreen = () => {
         transition={{ duration: 0.5 }}
         className="flex flex-col items-center mb-12"
       >
-        <div className="w-20 h-20 rounded-2xl bg-primary flex items-center justify-center mb-6 shadow-card">
-          <Box className="w-10 h-10 text-primary-foreground" />
+        <div className="w-20 h-20 rounded-2xl bg-primary flex items-center justify-center mb-6 shadow-card p-3">
+          <img src={logoWhite} alt="NutBox Logo" className="w-full h-full object-contain" />
         </div>
         <h1 className="title-large text-center">Welcome Back</h1>
         <p className="text-muted-foreground mt-2 text-center">
