@@ -74,7 +74,7 @@ const LoginScreen = () => {
       duration: 0.4
     }} className="space-y-4">
         <div>
-          <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="ios-input" />
+          <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="ios-input" placeholder="Adresse mail" />
         </div>
 
         <div className="relative">
