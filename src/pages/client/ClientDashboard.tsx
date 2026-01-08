@@ -9,7 +9,7 @@ const ClientDashboard = () => {
   const { user } = useAuth();
 
   const actions = [
-    { icon: Package, label: 'sddfzdv', path: '/client/containers' },
+    { icon: Package, label: 'Mes contenants', path: '/client/containers' },
     { icon: QrCode, label: 'My QR Code', path: '/client/qr-code' },
     { icon: Coins, label: 'My Nut Coins', path: '/client/coins' },
     { icon: User, label: 'My Account', path: '/account' },
