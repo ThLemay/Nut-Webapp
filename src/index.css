@@ -27,7 +27,7 @@
     --popover-foreground: 0 0% 11%;
 
     /* Apple System Blue */
-    --primary: 229 84% 4.902%;
+    --primary: 126 28% 28%;
     --primary-foreground: 0 0% 100%;
 
     /* Soft gray surfaces */
@@ -37,8 +37,8 @@
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 45%;
 
-    --accent: 211 100% 96%;
-    --accent-foreground: 211 100% 50%;
+    --accent: 127 10% 83%;
+    --accent-foreground: 125 10% 55%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
