@@ -54,7 +54,7 @@ const LoginScreen = () => {
       delay: 0.1,
       duration: 0.4
     }} className="flex gap-3 mb-8">
-        <button onClick={() => setSelectedRole('client')} className={`flex-1 py-3 rounded-xl font-medium transition-all ${selectedRole === 'client' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'}`}>
+        <button onClick={() => setSelectedRole('client')} className="">
           Client
         </button>
         <button onClick={() => setSelectedRole('company')} className={`flex-1 py-3 rounded-xl font-medium transition-all ${selectedRole === 'company' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'}`}>
