@@ -39,7 +39,8 @@ const LoginScreen = () => {
         </div>
         <h1 className="title-large text-center">Bienvenue</h1>
         <p className="text-muted-foreground mt-2 text-center">
-          Sign in to continue
+          
+Connectez-vous pour continuer
         </p>
       </motion.div>
 
