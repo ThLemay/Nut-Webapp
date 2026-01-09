@@ -52,7 +52,13 @@ const QRScanner = () => {
 
       await qr.start(
         { facingMode: 'environment' },
-        { fps: 10, qrbox: { width: 250, height: 250 } },
+        {
+  fps: 10,
+  qrbox: (viewfinderWidth: number, viewfinderHeight: number) => {
+    const size = Math.floor(Math.min(viewfinderWidth, viewfinderHeight) * 0.7);
+    return { width: size, height: size };
+  },
+},
         async (text) => {
           // succès
           setDecodedText(text);
@@ -121,7 +127,11 @@ const QRScanner = () => {
 
               {/* ✅ VRAI FLUX CAMERA (derrière) */}
               <div className="absolute inset-0 rounded-3xl overflow-hidden">
-                <div id={scannerElementId} className="w-full h-full" />
+                <div
+  id={scannerElementId}
+  className="w-full h-full [&>video]:w-full [&>video]:h-full [&>video]:object-cover [&>canvas]:w-full [&>canvas]:h-full"
+/>
+
               </div>
 
               {/* Corner Markers */}
