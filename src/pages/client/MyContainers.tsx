@@ -3,17 +3,17 @@ import PageHeader from '@/components/PageHeader';
 import ListItem from '@/components/ListItem';
 
 const containers = [
-  { id: 'NB-2847', name: 'Large Box', status: 'borrowed', date: 'Dec 28, 2025' },
-  { id: 'NB-1923', name: 'Medium Container', status: 'borrowed', date: 'Jan 3, 2026' },
-  { id: 'NB-5621', name: 'Small Bowl', status: 'returned', date: 'Jan 5, 2026' },
-  { id: 'NB-3384', name: 'Food Box', status: 'returned', date: 'Jan 6, 2026' },
-  { id: 'NB-7192', name: 'Large Container', status: 'borrowed', date: 'Jan 7, 2026' },
+  { id: 'NB-2847', name: 'Grand contenant', status: 'borrowed', date: 'Dec 28, 2025' },
+  { id: 'NB-1923', name: 'Contenant moyen', status: 'borrowed', date: 'Jan 3, 2026' },
+  { id: 'NB-5621', name: 'Petit contenant', status: 'returned', date: 'Jan 5, 2026' },
+  { id: 'NB-3384', name: 'Petit contenant', status: 'returned', date: 'Jan 6, 2026' },
+  { id: 'NB-7192', name: 'Grand contenant', status: 'borrowed', date: 'Jan 7, 2026' },
 ];
 
 const MyContainers = () => {
   return (
     <div className="screen-container">
-      <PageHeader title="My Containers" />
+      <PageHeader title="Mes Contenants" />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -42,7 +42,7 @@ const MyContainers = () => {
         transition={{ delay: 0.4 }}
         className="text-center text-muted-foreground text-sm mt-6"
       >
-        {containers.filter(c => c.status === 'borrowed').length} containers currently borrowed
+        {containers.filter(c => c.status === 'borrowed').length} contenants empruntés
       </motion.p>
     </div>
   );

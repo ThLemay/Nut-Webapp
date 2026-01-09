@@ -8,7 +8,7 @@ const MyQRCode = () => {
   } = useAuth();
   const qrValue = `nutbox:client:${user?.email || 'demo'}:${Date.now()}`;
   return <div className="screen-container">
-      <PageHeader title="My QR Code" />
+      <PageHeader title="Mon QR Code" />
 
       <motion.div initial={{
       opacity: 0,
@@ -43,7 +43,7 @@ const MyQRCode = () => {
             ​Montrer le code à votre commerçant     
           </p>
           <p className="text-muted-foreground mt-2">
-            The store will scan this to lend or collect containers
+            Le magasin va scanner cela pour prêter ou collecter des conteneurs
           </p>
         </motion.div>
 

@@ -10,9 +10,9 @@ const ClientDashboard = () => {
 
   const actions = [
     { icon: Package, label: 'Mes contenants', path: '/client/containers' },
-    { icon: QrCode, label: 'My QR Code', path: '/client/qr-code' },
-    { icon: Coins, label: 'My Nut Coins', path: '/client/coins' },
-    { icon: User, label: 'My Account', path: '/account' },
+    { icon: QrCode, label: 'Mon QR Code', path: '/client/qr-code' },
+    { icon: Coins, label: 'Mes Nut Coins', path: '/client/coins' },
+    { icon: User, label: 'Mon Compte', path: '/account' },
   ];
 
   return (

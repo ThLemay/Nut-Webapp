@@ -25,7 +25,7 @@ const QRScanner = () => {
 
   return (
     <div className="screen-container relative">
-      <PageHeader title="Scan QR Code" />
+      <PageHeader title="Scanner un QR code" />
 
       <AnimatePresence mode="wait">
         {scanState === 'scanning' && (
@@ -60,10 +60,10 @@ const QRScanner = () => {
             </div>
 
             <p className="text-lg font-medium text-foreground mb-2">
-              Scan client QR code
+              Scanner le QR code
             </p>
             <p className="text-muted-foreground text-center mb-8">
-              Position the QR code within the frame
+              Positionnez le code QR à l'intérieur du cadre.
             </p>
 
             {/* Demo Button */}
@@ -71,7 +71,7 @@ const QRScanner = () => {
               onClick={handleSimulateScan}
               className="ios-button-primary max-w-xs"
             >
-              Simulate Scan (Demo)
+              Scan (Demo)
             </button>
           </motion.div>
         )}
@@ -92,17 +92,17 @@ const QRScanner = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg text-foreground">Alex Johnson</h3>
-                  <p className="text-muted-foreground text-sm">Client verified</p>
+                  <p className="text-muted-foreground text-sm">Client vérifié</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="badge-success">3 borrowed</span>
+                <span className="badge-success">3 empruntés</span>
                 <span className="badge-muted">245 NC</span>
               </div>
             </div>
 
             <p className="text-lg font-medium text-foreground mb-6">
-              Choose an action
+              Choisi une action
             </p>
 
             {/* Action Buttons */}
@@ -113,7 +113,7 @@ const QRScanner = () => {
                 className="w-full py-4 px-6 rounded-2xl bg-primary text-primary-foreground font-semibold flex items-center justify-center gap-3"
               >
                 <ArrowUpFromLine className="w-5 h-5" />
-                Lend Containers
+                Prêter contenant
               </motion.button>
               <motion.button
                 whileTap={{ scale: 0.98 }}
@@ -121,7 +121,7 @@ const QRScanner = () => {
                 className="w-full py-4 px-6 rounded-2xl bg-success text-success-foreground font-semibold flex items-center justify-center gap-3"
               >
                 <ArrowDownToLine className="w-5 h-5" />
-                Collect Containers
+                Collecter contenant
               </motion.button>
             </div>
           </motion.div>
@@ -143,11 +143,11 @@ const QRScanner = () => {
             >
               <CheckCircle2 className="w-12 h-12 text-success-foreground" />
             </motion.div>
-            <h2 className="text-2xl font-bold text-foreground mb-2">Success!</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-2">Réussi!</h2>
             <p className="text-muted-foreground text-center">
               {selectedAction === 'lend' 
-                ? 'Containers lent to client' 
-                : 'Containers collected from client'}
+                ? 'Contenants prêtés au client' 
+                : 'Contenants récupérés auprès du client'}
             </p>
           </motion.div>
         )}

@@ -4,12 +4,12 @@ import PageHeader from '@/components/PageHeader';
 import ListItem from '@/components/ListItem';
 
 const transactions = [
-  { id: 1, type: 'earned', amount: 10, description: 'Container returned', date: 'Today' },
-  { id: 2, type: 'spent', amount: 5, description: 'Discount applied', date: 'Yesterday' },
-  { id: 3, type: 'earned', amount: 10, description: 'Container returned', date: 'Jan 5' },
-  { id: 4, type: 'earned', amount: 20, description: 'Bonus reward', date: 'Jan 3' },
-  { id: 5, type: 'spent', amount: 15, description: 'Discount applied', date: 'Jan 2' },
-  { id: 6, type: 'earned', amount: 10, description: 'Container returned', date: 'Dec 30' },
+  { id: 1, type: 'earned', amount: 10, description: 'Contenant retourné', date: "Aujourd'hui" },
+  { id: 2, type: 'spent', amount: 5, description: 'Remise appliquée', date: 'Hier' },
+  { id: 3, type: 'earned', amount: 10, description: 'Contenant retourné', date: 'Jan 5' },
+  { id: 4, type: 'earned', amount: 20, description: 'Bonus', date: 'Jan 3' },
+  { id: 5, type: 'spent', amount: 15, description: 'Remise appliquée', date: 'Jan 2' },
+  { id: 6, type: 'earned', amount: 10, description: 'Contenant retourné', date: 'Dec 30' },
 ];
 
 const MyCoins = () => {
@@ -17,7 +17,7 @@ const MyCoins = () => {
 
   return (
     <div className="screen-container">
-      <PageHeader title="My Nut Coins" />
+      <PageHeader title="Mes Nut Coins" />
 
       {/* Balance Card */}
       <motion.div
@@ -30,7 +30,7 @@ const MyCoins = () => {
           <div className="w-12 h-12 rounded-2xl bg-primary-foreground/20 flex items-center justify-center">
             <Coins className="w-6 h-6 text-primary-foreground" />
           </div>
-          <span className="text-primary-foreground/80 font-medium">Available Balance</span>
+          <span className="text-primary-foreground/80 font-medium">Solde disponible</span>
         </div>
         <div className="text-5xl font-bold text-primary-foreground">
           {balance}
@@ -44,7 +44,7 @@ const MyCoins = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
-        <h2 className="title-medium mb-4">Transaction History</h2>
+        <h2 className="title-medium mb-4">Historique des transactions</h2>
         <div className="bg-card rounded-2xl overflow-hidden shadow-card">
           {transactions.map((tx, index) => (
             <ListItem

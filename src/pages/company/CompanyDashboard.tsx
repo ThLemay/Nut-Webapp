@@ -9,9 +9,9 @@ const CompanyDashboard = () => {
   const { user } = useAuth();
 
   const actions = [
-    { icon: Package, label: 'My Stock', path: '/company/stock' },
-    { icon: ScanLine, label: 'Lend / Collect Containers', path: '/company/scanner' },
-    { icon: User, label: 'My Account', path: '/account' },
+    { icon: Package, label: 'Mon Stock', path: '/company/stock' },
+    { icon: ScanLine, label: 'Prêter / Récupérer des contenants', path: '/company/scanner' },
+    { icon: User, label: 'Mon Compte', path: '/account' },
   ];
 
   return (
@@ -47,11 +47,11 @@ const CompanyDashboard = () => {
       >
         <div className="bg-accent rounded-2xl p-5">
           <p className="text-3xl font-bold text-primary">47</p>
-          <p className="text-sm text-muted-foreground mt-1">In Stock</p>
+          <p className="text-sm text-muted-foreground mt-1">En stock</p>
         </div>
         <div className="bg-accent rounded-2xl p-5">
           <p className="text-3xl font-bold text-primary">23</p>
-          <p className="text-sm text-muted-foreground mt-1">Lent Out</p>
+          <p className="text-sm text-muted-foreground mt-1">Empruntés</p>
         </div>
       </motion.div>
     </div>
