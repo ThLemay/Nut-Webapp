@@ -22,7 +22,7 @@ const CompanyDashboard = () => {
         transition={{ duration: 0.4 }}
         className="mb-8"
       >
-        <p className="text-muted-foreground">Welcome back,</p>
+        <p className="text-muted-foreground">Heureux de vous revoir,</p>
         <h1 className="title-large mt-1">{user?.name || 'Company'}</h1>
       </motion.div>
 

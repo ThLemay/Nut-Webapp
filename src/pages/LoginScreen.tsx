@@ -59,7 +59,7 @@ Connectez-vous pour continuer
           Client
         </button>
         <button onClick={() => setSelectedRole('company')} className={`flex-1 py-3 rounded-xl font-medium transition-all ${selectedRole === 'company' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'}`}>
-          Company
+          Entreprise
         </button>
       </motion.div>
 
