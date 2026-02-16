@@ -9,17 +9,16 @@ import {
 } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import { Html5Qrcode } from 'html5-qrcode';
+import { addTransaction } from '@/lib/demoDb';
 
 type ScanState = 'scanning' | 'scanned' | 'success';
 
 const QRScanner = () => {
   const [scanState, setScanState] = useState<ScanState>('scanning');
   const [selectedAction, setSelectedAction] = useState<'lend' | 'collect' | null>(null);
-
-  // Stocke le texte scanné (tu pourras ensuite appeler une API avec ça)
   const [decodedText, setDecodedText] = useState<string | null>(null);
+  const [clientEmail, setClientEmail] = useState<string | null>(null);
 
-  // ID unique pour le container du scanner
   const scannerElementId = useId();
   const qrRef = useRef<Html5Qrcode | null>(null);
   const isStartingRef = useRef(false);
@@ -27,19 +26,8 @@ const QRScanner = () => {
   const stopScanner = async () => {
     const qr = qrRef.current;
     if (!qr) return;
-
-    try {
-      // stop peut throw si déjà stoppé
-      await qr.stop();
-    } catch {
-      // ignore
-    }
-
-    try {
-      await qr.clear();
-    } catch {
-      // ignore
-    }
+    try { qr.stop(); } catch { /* déjà stoppé */ }
+    try { qr.clear(); } catch { /* ignore */ }
   };
 
   const startScanner = async () => {
@@ -53,51 +41,50 @@ const QRScanner = () => {
       await qr.start(
         { facingMode: 'environment' },
         {
-  fps: 10,
-  qrbox: (viewfinderWidth: number, viewfinderHeight: number) => {
-    const size = Math.floor(Math.min(viewfinderWidth, viewfinderHeight) * 0.7);
-    return { width: size, height: size };
-  },
-},
+          fps: 10,
+          qrbox: (w: number, h: number) => {
+            const size = Math.floor(Math.min(w, h) * 0.7);
+            return { width: size, height: size };
+          },
+        },
         async (text) => {
-          // succès
-          setDecodedText(text);
-          setScanState('scanned');
+          // Extraire l'email du format nutbox:client:email:timestamp
+          const parts = text.split(':');
+          const email = parts.length >= 3 ? parts[2] : text;
 
-          // On arrête la caméra après un scan (meilleure UX / évite double scan)
+          setDecodedText(text);
+          setClientEmail(email);
+          setScanState('scanned');
           await stopScanner();
         },
-        () => {
-          // erreurs de décodage fréquentes => on ignore
-        }
+        () => { /* erreurs de décodage fréquentes, ignorées */ }
       );
-    } catch (e: any) {
+    } catch (e: unknown) {
+      const message =
+        e instanceof Error
+          ? e.message
+          : "Impossible d'accéder à la caméra. Vérifie les autorisations du navigateur.";
       console.error('QR start error:', e);
-      alert(
-        e?.message ||
-          "Impossible d'accéder à la caméra. Vérifie les autorisations du navigateur."
-      );
+      alert(message);
     } finally {
       isStartingRef.current = false;
     }
   };
 
   useEffect(() => {
-    // On démarre la caméra uniquement quand on est en mode "scanning"
     if (scanState === 'scanning') {
       startScanner();
     } else {
       stopScanner();
     }
-
-    // Clean-up quand on quitte l'écran
-    return () => {
-      stopScanner();
-    };
+    return () => { stopScanner(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scanState]);
 
   const handleAction = (action: 'lend' | 'collect') => {
+    if (decodedText) {
+      addTransaction(decodedText, action);
+    }
     setSelectedAction(action);
     setScanState('success');
 
@@ -105,6 +92,7 @@ const QRScanner = () => {
       setScanState('scanning');
       setSelectedAction(null);
       setDecodedText(null);
+      setClientEmail(null);
     }, 2500);
   };
 
@@ -121,33 +109,28 @@ const QRScanner = () => {
             exit={{ opacity: 0 }}
             className="flex flex-col items-center"
           >
-            {/* Scanner Frame */}
             <div className="relative w-72 h-72 mb-8">
               <div className="absolute inset-0 bg-secondary rounded-3xl overflow-hidden" />
 
-              {/* ✅ VRAI FLUX CAMERA (derrière) */}
               <div className="absolute inset-0 rounded-3xl overflow-hidden">
                 <div
-  id={scannerElementId}
-  className="w-full h-full [&>video]:w-full [&>video]:h-full [&>video]:object-cover [&>canvas]:w-full [&>canvas]:h-full"
-/>
-
+                  id={scannerElementId}
+                  className="w-full h-full [&>video]:w-full [&>video]:h-full [&>video]:object-cover [&>canvas]:w-full [&>canvas]:h-full"
+                />
               </div>
 
-              {/* Corner Markers */}
+              {/* Coin markers */}
               <div className="absolute top-4 left-4 w-12 h-12 border-t-4 border-l-4 border-primary rounded-tl-xl" />
               <div className="absolute top-4 right-4 w-12 h-12 border-t-4 border-r-4 border-primary rounded-tr-xl" />
               <div className="absolute bottom-4 left-4 w-12 h-12 border-b-4 border-l-4 border-primary rounded-bl-xl" />
               <div className="absolute bottom-4 right-4 w-12 h-12 border-b-4 border-r-4 border-primary rounded-br-xl" />
 
-              {/* Scan Line Animation */}
               <motion.div
                 className="absolute left-4 right-4 h-1 bg-primary/50 rounded-full"
                 animate={{ top: ['20%', '80%', '20%'] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
               />
 
-              {/* Icon overlay léger */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <ScanLine className="w-16 h-16 text-primary/20" />
               </div>
@@ -157,9 +140,8 @@ const QRScanner = () => {
             <p className="text-muted-foreground text-center mb-4">
               Positionnez le code QR à l'intérieur du cadre.
             </p>
-
             <p className="text-muted-foreground text-center text-sm">
-              Si Edge demande une autorisation, accepte l’accès caméra.
+              Si Edge demande une autorisation, accepte l'accès caméra.
             </p>
           </motion.div>
         )}
@@ -172,34 +154,23 @@ const QRScanner = () => {
             exit={{ opacity: 0, scale: 0.95 }}
             className="flex flex-col items-center"
           >
-            {/* Client Info (demo pour l’instant) */}
+            {/* Info client extraite du QR */}
             <div className="bg-card rounded-3xl p-6 shadow-elevated mb-6 w-full max-w-xs">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-14 h-14 rounded-2xl bg-accent flex items-center justify-center">
                   <Package className="w-7 h-7 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg text-foreground">Alex Johnson</h3>
+                  <h3 className="font-semibold text-lg text-foreground">
+                    {clientEmail ?? 'Client inconnu'}
+                  </h3>
                   <p className="text-muted-foreground text-sm">Client vérifié</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="badge-success">3 empruntés</span>
-                <span className="badge-muted">245 NC</span>
-              </div>
             </div>
-
-            {/* ✅ Afficher le contenu scanné (utile debug) */}
-            {decodedText && (
-              <div className="bg-card rounded-2xl p-4 mb-6 w-full max-w-xs shadow-card">
-                <p className="text-sm text-muted-foreground mb-1">QR détecté</p>
-                <p className="text-foreground font-medium break-all">{decodedText}</p>
-              </div>
-            )}
 
             <p className="text-lg font-medium text-foreground mb-6">Choisis une action</p>
 
-            {/* Action Buttons */}
             <div className="w-full max-w-xs space-y-3">
               <motion.button
                 whileTap={{ scale: 0.98 }}
@@ -219,12 +190,12 @@ const QRScanner = () => {
                 Collecter contenant
               </motion.button>
 
-              {/* Bouton pour rescanner si besoin */}
               <motion.button
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   setScanState('scanning');
                   setDecodedText(null);
+                  setClientEmail(null);
                 }}
                 className="w-full py-3 px-6 rounded-2xl bg-secondary text-foreground font-semibold"
               >
@@ -253,8 +224,8 @@ const QRScanner = () => {
             <h2 className="text-2xl font-bold text-foreground mb-2">Réussi !</h2>
             <p className="text-muted-foreground text-center">
               {selectedAction === 'lend'
-                ? 'Contenants prêtés au client'
-                : 'Contenants récupérés auprès du client'}
+                ? 'Contenant prêté au client'
+                : 'Contenant récupéré — +1 Nut Coin attribué'}
             </p>
           </motion.div>
         )}

@@ -1,19 +1,16 @@
 import { motion } from 'framer-motion';
-import { Coins, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
+import { Coins, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import PageHeader from '@/components/PageHeader';
 import ListItem from '@/components/ListItem';
-
-const transactions = [
-  { id: 1, type: 'earned', amount: 10, description: 'Contenant retourné', date: "Aujourd'hui" },
-  { id: 2, type: 'spent', amount: 5, description: 'Remise appliquée', date: 'Hier' },
-  { id: 3, type: 'earned', amount: 10, description: 'Contenant retourné', date: 'Jan 5' },
-  { id: 4, type: 'earned', amount: 20, description: 'Bonus', date: 'Jan 3' },
-  { id: 5, type: 'spent', amount: 15, description: 'Remise appliquée', date: 'Jan 2' },
-  { id: 6, type: 'earned', amount: 10, description: 'Contenant retourné', date: 'Dec 30' },
-];
+import { useDemoState } from '@/hooks/useDemoState';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
 
 const MyCoins = () => {
-  const balance = 245;
+  const { state, transactions } = useDemoState();
+
+  // On n'affiche que les transactions qui rapportent des coins (collect)
+  const coinTransactions = transactions.filter((tx) => tx.action === 'collect');
 
   return (
     <div className="screen-container">
@@ -33,7 +30,7 @@ const MyCoins = () => {
           <span className="text-primary-foreground/80 font-medium">Solde disponible</span>
         </div>
         <div className="text-5xl font-bold text-primary-foreground">
-          {balance}
+          {state.nutCoins}
           <span className="text-2xl font-normal ml-2">NC</span>
         </div>
       </motion.div>
@@ -45,28 +42,29 @@ const MyCoins = () => {
         transition={{ delay: 0.3 }}
       >
         <h2 className="title-medium mb-4">Historique des transactions</h2>
-        <div className="bg-card rounded-2xl overflow-hidden shadow-card">
-          {transactions.map((tx, index) => (
-            <ListItem
-              key={tx.id}
-              title={tx.description}
-              subtitle={tx.date}
-              badge={
-                <div className={`flex items-center gap-1 font-semibold ${
-                  tx.type === 'earned' ? 'text-success' : 'text-destructive'
-                }`}>
-                  {tx.type === 'earned' ? (
+
+        {coinTransactions.length === 0 ? (
+          <p className="text-center text-muted-foreground text-sm py-8">
+            Aucune transaction pour l'instant.{'\n'}Retournez un contenant pour gagner des Nut Coins !
+          </p>
+        ) : (
+          <div className="bg-card rounded-2xl overflow-hidden shadow-card">
+            {coinTransactions.map((tx, index) => (
+              <ListItem
+                key={tx.id}
+                title="Contenant retourné"
+                subtitle={format(new Date(tx.createdAt), 'dd MMM yyyy, HH:mm', { locale: fr })}
+                badge={
+                  <div className="flex items-center gap-1 font-semibold text-success">
                     <ArrowDownLeft className="w-4 h-4" />
-                  ) : (
-                    <ArrowUpRight className="w-4 h-4" />
-                  )}
-                  {tx.type === 'earned' ? '+' : '-'}{tx.amount}
-                </div>
-              }
-              delay={index * 0.05}
-            />
-          ))}
-        </div>
+                    +1
+                  </div>
+                }
+                delay={index * 0.05}
+              />
+            ))}
+          </div>
+        )}
       </motion.div>
     </div>
   );
