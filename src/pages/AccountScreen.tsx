@@ -14,14 +14,14 @@ const AccountScreen = () => {
   };
 
   const profileFields = [
-    { icon: User, label: 'Name', value: user?.name || 'Demo User' },
-    { icon: Mail, label: 'Email', value: user?.email || 'demo@example.com' },
-    { icon: Shield, label: 'Account Type', value: user?.role === 'client' ? 'Client' : 'Entreprise' },
+    { icon: User, label: 'Nom', value: user?.name || 'Demo User' },
+    { icon: Mail, label: 'E-mail', value: user?.email || 'demo@example.com' },
+    { icon: Shield, label: 'Type de compte', value: user?.role === 'client' ? 'Client' : 'Entreprise' },
   ];
 
   return (
     <div className="screen-container">
-      <PageHeader title="My Account" />
+      <PageHeader title="Mon Compte" />
 
       {/* Profile Card */}
       <motion.div
@@ -77,7 +77,7 @@ const AccountScreen = () => {
         className="w-full py-4 rounded-2xl bg-destructive/10 text-destructive font-semibold flex items-center justify-center gap-2"
       >
         <LogOut className="w-5 h-5" />
-        Sign Out
+        Déconnexion
       </motion.button>
 
       <motion.p

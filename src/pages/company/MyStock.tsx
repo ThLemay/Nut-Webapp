@@ -4,11 +4,9 @@ import PageHeader from '@/components/PageHeader';
 import ListItem from '@/components/ListItem';
 
 const stockItems = [
-  { id: 1, name: 'Large Box', quantity: 12, available: 8 },
-  { id: 2, name: 'Medium Container', quantity: 20, available: 15 },
-  { id: 3, name: 'Small Bowl', quantity: 25, available: 18 },
-  { id: 4, name: 'Food Box', quantity: 15, available: 6 },
-  { id: 5, name: 'Large Container', quantity: 8, available: 5 },
+  { id: 1, name: 'Grand contenant', quantity: 12, available: 8 },
+  { id: 2, name: 'Contenant moyen', quantity: 20, available: 15 },
+  { id: 3, name: 'Petit contenant', quantity: 25, available: 18 },
 ];
 
 const MyStock = () => {
@@ -17,7 +15,7 @@ const MyStock = () => {
 
   return (
     <div className="screen-container">
-      <PageHeader title="My Stock" />
+      <PageHeader title="Mon stock" />
 
       {/* Summary Card */}
       <motion.div
@@ -30,16 +28,16 @@ const MyStock = () => {
           <div className="w-12 h-12 rounded-2xl bg-primary-foreground/20 flex items-center justify-center">
             <Package className="w-6 h-6 text-primary-foreground" />
           </div>
-          <span className="text-primary-foreground/80 font-medium">Stock Overview</span>
+          <span className="text-primary-foreground/80 font-medium">Vue des stocks</span>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <p className="text-3xl font-bold text-primary-foreground">{totalAvailable}</p>
-            <p className="text-primary-foreground/70 text-sm">Available</p>
+            <p className="text-primary-foreground/70 text-sm">Disponible</p>
           </div>
           <div>
             <p className="text-3xl font-bold text-primary-foreground">{totalItems - totalAvailable}</p>
-            <p className="text-primary-foreground/70 text-sm">Lent Out</p>
+            <p className="text-primary-foreground/70 text-sm">Empruntés</p>
           </div>
         </div>
       </motion.div>

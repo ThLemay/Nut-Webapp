@@ -3,15 +3,17 @@ import { motion } from 'framer-motion';
 import { Package, ScanLine, User } from 'lucide-react';
 import ActionCard from '@/components/ActionCard';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDemoState } from '@/hooks/useDemoState';
 
 const CompanyDashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { state } = useDemoState();
 
   const actions = [
-    { icon: Package, label: 'My Stock', path: '/company/stock' },
-    { icon: ScanLine, label: 'Lend / Collect Containers', path: '/company/scanner' },
-    { icon: User, label: 'My Account', path: '/account' },
+    { icon: Package, label: 'Mon Stock', path: '/company/stock' },
+    { icon: ScanLine, label: 'Prêter / Récupérer des contenants', path: '/company/scanner' },
+    { icon: User, label: 'Mon Compte', path: '/account' },
   ];
 
   return (
@@ -22,7 +24,7 @@ const CompanyDashboard = () => {
         transition={{ duration: 0.4 }}
         className="mb-8"
       >
-        <p className="text-muted-foreground">Welcome back,</p>
+        <p className="text-muted-foreground">Heureux de vous revoir,</p>
         <h1 className="title-large mt-1">{user?.name || 'Company'}</h1>
       </motion.div>
 
@@ -46,12 +48,12 @@ const CompanyDashboard = () => {
         className="mt-8 grid grid-cols-2 gap-4"
       >
         <div className="bg-accent rounded-2xl p-5">
-          <p className="text-3xl font-bold text-primary">47</p>
-          <p className="text-sm text-muted-foreground mt-1">In Stock</p>
+          <p className="text-3xl font-bold text-primary">{state.companyStock}</p>
+          <p className="text-sm text-muted-foreground mt-1">En stock</p>
         </div>
         <div className="bg-accent rounded-2xl p-5">
-          <p className="text-3xl font-bold text-primary">23</p>
-          <p className="text-sm text-muted-foreground mt-1">Lent Out</p>
+          <p className="text-3xl font-bold text-primary">{state.clientContainers}</p>
+          <p className="text-sm text-muted-foreground mt-1">Empruntés</p>
         </div>
       </motion.div>
     </div>

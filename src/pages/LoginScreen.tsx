@@ -59,7 +59,7 @@ Connectez-vous pour continuer
           Client
         </button>
         <button onClick={() => setSelectedRole('company')} className={`flex-1 py-3 rounded-xl font-medium transition-all ${selectedRole === 'company' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'}`}>
-          Company
+          Entreprise
         </button>
       </motion.div>
 
@@ -100,8 +100,8 @@ Connectez-vous pour continuer
         <button onClick={handleLogin} disabled={isLoading || !email || !password} className="ios-button-primary disabled:opacity-50 disabled:cursor-not-allowed">
           {isLoading ? <span className="flex items-center justify-center gap-2">
               <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-              Signing in...
-            </span> : 'Sign In'}
+              Connexion en cours...
+            </span> : 'Se connecter'}
         </button>
       </motion.div>
 
@@ -114,7 +114,7 @@ Connectez-vous pour continuer
       delay: 0.5,
       duration: 0.4
     }} className="text-center text-muted-foreground text-sm mt-8">
-        Demo mode: Enter any credentials
+        Mode démo
       </motion.p>
     </div>;
 };

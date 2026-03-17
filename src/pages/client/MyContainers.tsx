@@ -1,40 +1,53 @@
 import { motion } from 'framer-motion';
 import PageHeader from '@/components/PageHeader';
 import ListItem from '@/components/ListItem';
-
-const containers = [
-  { id: 'NB-2847', name: 'Large Box', status: 'borrowed', date: 'Dec 28, 2025' },
-  { id: 'NB-1923', name: 'Medium Container', status: 'borrowed', date: 'Jan 3, 2026' },
-  { id: 'NB-5621', name: 'Small Bowl', status: 'returned', date: 'Jan 5, 2026' },
-  { id: 'NB-3384', name: 'Food Box', status: 'returned', date: 'Jan 6, 2026' },
-  { id: 'NB-7192', name: 'Large Container', status: 'borrowed', date: 'Jan 7, 2026' },
-];
+import { useDemoState } from '@/hooks/useDemoState';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
 
 const MyContainers = () => {
+  const { transactions, state } = useDemoState();
+
+  const containerHistory = transactions.map((tx) => ({
+    id: tx.id,
+    status: tx.action === 'lend' ? 'borrowed' : 'returned',
+    date: format(new Date(tx.createdAt), 'dd MMM yyyy', { locale: fr }),
+  }));
+
   return (
     <div className="screen-container">
-      <PageHeader title="My Containers" />
+      <PageHeader title="Mes Contenants" />
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="bg-card rounded-2xl overflow-hidden shadow-card"
-      >
-        {containers.map((container, index) => (
-          <ListItem
-            key={container.id}
-            title={container.name}
-            subtitle={`${container.id} • ${container.date}`}
-            badge={
-              <span className={container.status === 'borrowed' ? 'badge-warning' : 'badge-success'}>
-                {container.status === 'borrowed' ? 'Borrowed' : 'Returned'}
-              </span>
-            }
-            delay={index * 0.05}
-          />
-        ))}
-      </motion.div>
+      {containerHistory.length === 0 ? (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center text-muted-foreground text-sm py-8"
+        >
+          Aucun contenant pour l'instant.
+        </motion.p>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="bg-card rounded-2xl overflow-hidden shadow-card"
+        >
+          {containerHistory.map((item, index) => (
+            <ListItem
+              key={item.id}
+              title="Contenant"
+              subtitle={item.date}
+              badge={
+                <span className={item.status === 'borrowed' ? 'badge-warning' : 'badge-success'}>
+                  {item.status === 'borrowed' ? 'Emprunté' : 'Retourné'}
+                </span>
+              }
+              delay={index * 0.05}
+            />
+          ))}
+        </motion.div>
+      )}
 
       <motion.p
         initial={{ opacity: 0 }}
@@ -42,7 +55,7 @@ const MyContainers = () => {
         transition={{ delay: 0.4 }}
         className="text-center text-muted-foreground text-sm mt-6"
       >
-        {containers.filter(c => c.status === 'borrowed').length} containers currently borrowed
+        {state.clientContainers} contenant{state.clientContainers !== 1 ? 's' : ''} emprunté{state.clientContainers !== 1 ? 's' : ''}
       </motion.p>
     </div>
   );
